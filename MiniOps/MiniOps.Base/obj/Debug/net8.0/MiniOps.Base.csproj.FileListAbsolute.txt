@@ -1,0 +1,13 @@
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\bin\Debug\net8.0\MiniOps.Base.deps.json
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\bin\Debug\net8.0\MiniOps.Base.dll
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\bin\Debug\net8.0\MiniOps.Base.pdb
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.csproj.AssemblyReference.cache
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.AssemblyInfoInputs.cache
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.AssemblyInfo.cs
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.sourcelink.json
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.dll
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\refint\MiniOps.Base.dll
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\MiniOps.Base.pdb
+C:\Users\user\Documents\GitHub\MiniOps\MiniOps\MiniOps.Base\obj\Debug\net8.0\ref\MiniOps.Base.dll

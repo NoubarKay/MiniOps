@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MiniOps Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@1.27.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+  <link rel="stylesheet" href="/dashboard/style.css">
+</head>
+<body>
+<h1>MiniOps Live Metrics</h1>
+
+<!-- Chart -->
+<div id="chart-container">
+  <canvas id="metricsChart" height="75"></canvas>
+</div>
+
+<!-- Summary Cards -->
+<div id="summary-cards">
+  <div class="card total">
+    <div class="card-title">Total Requests</div>
+    <div class="card-value" id="totalRequests">0</div>
+  </div>
+  <div class="card success">
+    <div class="card-title">Success</div>
+    <div class="card-value" id="successRequests">0</div>
+  </div>
+  <div class="card fail">
+    <div class="card-title">Failures</div>
+    <div class="card-value" id="failRequests">0</div>
+  </div>
+  <div class="card avg">
+    <div class="card-title">Avg Response Time</div>
+    <div class="card-value" id="avgResponse">0 ms</div>
+  </div>
+</div>
+
+<script>
+  const ctx = document.getElementById("metricsChart").getContext("2d");
+
+  const chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      datasets: [
+        { label: "Request Count", borderColor: "#00ffd0", fill: true, tension: 0.4, pointRadius: 0, data: [], borderWidth: 2, backgroundColor: "rgba(0,255,208,0.2)" },
+        { label: "Success Count", borderColor: "#4bc05a", fill: true, tension: 0.4, pointRadius: 0, data: [], borderWidth: 2, backgroundColor: "rgba(75,192,90,0.2)" },
+        { label: "Fail Count", borderColor: "#e84c4c", fill: true, tension: 0.4, pointRadius: 0, data: [], borderWidth: 2, backgroundColor: "rgba(232,76,76,0.2)" },
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: false,
+      plugins: {
+        tooltip: { enabled: true, mode: "nearest", intersect: false },
+        legend: { display: false }
+      },
+      scales: {
+        x: {
+          type: "realtime",
+          realtime: {
+            duration: 60000,
+            refresh: 500,
+            delay: 1000,
+            onRefresh: chart => {
+              fetch("/miniops/api/metrics")
+                      .then(res => res.json())
+                      .then(data => {
+                        const total = Math.round(data.countLastMinute.length);
+                        const success = Math.round(data.countLastMinuteSuccess.length);
+                        const fail = Math.round(data.countLastMinuteFail.length);
+                        const avgMs = Math.round(data.averageTime);
+
+                        document.getElementById("totalRequests").textContent = total;
+                        document.getElementById("successRequests").textContent = success;
+                        document.getElementById("failRequests").textContent = fail;
+                        document.getElementById("avgResponse").textContent = avgMs + " ms";
+
+                        chart.data.datasets[0].data.push({ x: Date.now(), y: total });
+                        chart.data.datasets[1].data.push({ x: Date.now(), y: success });
+                        chart.data.datasets[2].data.push({ x: Date.now(), y: fail });
+                      })
+                      .catch(err => console.error(err));
+            }
+          },
+          ticks: { color: "#ccc" },
+          grid: { color: "rgba(255,255,255,0.05)" }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: "#ccc" },
+          grid: { color: "rgba(255,255,255,0.05)" }
+        }
+      }
+    }
+  });
+
+  // Randomized high-frequency API calls
+  async function callApi() { try { await fetch("/weatherforecast"); } catch(e){} }
+  function startRandomLoad() {
+    const callsPerSecond = Math.floor(Math.random() * 400) + 100;
+    const intervalMs = 1000 / callsPerSecond;
+    setInterval(callApi, intervalMs);
+  }
+  startRandomLoad();
+</script>
+</body>
+</html>
